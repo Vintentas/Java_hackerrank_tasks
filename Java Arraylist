@@ -1,0 +1,46 @@
+/*
+https://www.hackerrank.com/challenges/java-arraylist/problem?h_r=internal-search
+*/
+
+
+import java.io.*;
+import java.util.*;
+import java.text.*;
+import java.math.*;
+import java.util.regex.*;
+
+public class Solution {
+
+    public static void main(String[] args) {
+        /* Enter your code here. Read input from STDIN. Print output to STDOUT. Your class should be named Solution. */
+        
+      Scanner scanner = new Scanner(System.in);
+        int n = scanner.nextInt();
+
+        ArrayList [] array = new ArrayList[n];
+
+        for(int i=0; i<n; i++){
+            ArrayList<Integer> arrayInner = new ArrayList<>();
+
+            int k = scanner.nextInt();
+
+            for (int j=0; j<k; j++){
+                arrayInner.add(scanner.nextInt());
+            }
+            array[i]=arrayInner;
+        }
+
+        n = scanner.nextInt();
+
+        for (int i=0; i<n; i++){
+            try {
+                int x= (scanner.nextInt())-1;
+                int y= (scanner.nextInt())-1;
+                System.out.println(array[x].get(y));
+            }
+            catch (Exception e){
+                System.out.println("ERROR!");
+            }
+        }
+    }
+}
