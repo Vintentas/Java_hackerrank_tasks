@@ -1,0 +1,30 @@
+/*
+https://www.hackerrank.com/challenges/java-biginteger/problem?h_r=internal-search
+*/
+
+import java.io.*;
+import java.util.*;
+import java.text.*;
+import java.math.*;
+import java.util.regex.*;
+
+public class Solution {
+
+    public static void main(String[] args) {
+        /* Enter your code here. Read input from STDIN. Print output to STDOUT. Your class should be named Solution. */
+           Scanner scanner = new Scanner(System.in);
+        BigInteger a = scanner.nextBigInteger();
+        BigInteger b = scanner.nextBigInteger();
+        
+        
+        BigInteger c = a.add(b);
+        BigInteger d = a.multiply(b);
+        
+        System.out.println(c);
+        System.out.println(d); 
+       
+       
+        scanner.close();
+    
+    }
+}
