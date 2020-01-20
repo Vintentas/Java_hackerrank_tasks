@@ -1,0 +1,58 @@
+/*
+https://www.hackerrank.com/challenges/java-anagrams/problem?h_r=internal-search
+*/
+
+
+import java.util.Scanner;
+
+public class Solution {
+
+    static boolean isAnagram(String a, String b) {
+        // Complete the function
+        
+        String word1 = a;
+        String word2 = b;
+
+        //boolean sw = true;
+
+        if (word1.length() != word2.length()) return false;
+
+        else {
+            word1 = word1.toLowerCase();
+            word2 = word2.toLowerCase();
+
+            char [] ch1 = new char[word1.length()];
+            char [] ch2 = new char[word2.length()];
+
+            word1.getChars(0, word1.length(), ch1, 0);
+            word2.getChars(0, word2.length(), ch2, 0);
+
+            for (int i=0; i<ch1.length ;i++) {
+                int count1 = 0;
+                int count2 = 0;
+
+                for (int j = 0; j <ch1.length; j++){
+                    if (ch1[i] == ch1[j]) count1++;
+                    if (ch1[i] == ch2[j]) count2++;
+                }
+
+                if (count1 != count2) {
+                    return false;
+                }
+            }
+        }
+
+        return true;
+    }
+        
+
+    public static void main(String[] args) {
+    
+        Scanner scan = new Scanner(System.in);
+        String a = scan.next();
+        String b = scan.next();
+        scan.close();
+        boolean ret = isAnagram(a, b);
+        System.out.println( (ret) ? "Anagrams" : "Not Anagrams" );
+    }
+}
