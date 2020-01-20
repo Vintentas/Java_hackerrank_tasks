@@ -1,0 +1,43 @@
+/*
+https://www.hackerrank.com/challenges/java-negative-subarray/problem?h_r=internal-search
+*/
+
+
+
+import java.io.*;
+import java.util.*;
+import java.text.*;
+import java.math.*;
+import java.util.regex.*;
+
+public class Solution {
+
+    public static void main(String[] args) {
+        /* Enter your code here. Read input from STDIN. Print output to STDOUT. Your class should be named Solution. */
+
+        Scanner scanner = new Scanner(System.in);
+        
+    int k = scanner.nextInt();   
+        int [] array = new int[k];        
+         for (int i=0 ; i<k ; i++){
+           array[i]=scanner.nextInt();             
+         }    
+                int count=0;
+
+        for (int n=1; n<=k ; n++){
+            
+            for (int i=0; i<=(array.length-n) ; i++){
+                int sum=0;
+                for (int j=0; j<n ; j++){
+                    sum += array[i+j];
+                }
+                if (sum<0) count++;
+            }
+        }
+        System.out.println(count);
+        
+        scanner.close();
+
+    
+    }
+}
