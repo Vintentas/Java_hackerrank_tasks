@@ -1,0 +1,74 @@
+/*
+https://www.hackerrank.com/challenges/java-bitset/problem
+*/
+
+
+import java.io.*;
+import java.util.*;
+import java.text.*;
+import java.math.*;
+import java.util.regex.*;
+
+public class Solution {
+
+    public static void main(String[] args) {
+        /* Enter your code here. Read input from STDIN. Print output to STDOUT. Your class should be named Solution. */
+   
+        Scanner sc = new Scanner(System.in);
+        int n = sc.nextInt();
+        int m = sc.nextInt();
+
+        BitSet B1 = new BitSet(n);
+        BitSet B2 = new BitSet(n);
+        sc.nextLine();
+        
+        for (int i=0; i<m; i++){
+            String st = sc.nextLine();
+            String [] input = st.split(" ");
+
+            switch (input[0]){
+                case "AND": {
+                    if (input[1].equals("1"))
+                        B1.and(B2);
+                    else
+                        B2.and(B1);
+                    break;
+                }
+                case "OR": {
+                    if (input[1].equals("1"))
+                        B1.or(B2);
+                    else
+                        B2.or(B1);
+                    break;
+                }
+                case "XOR": {
+                    if (input[1].equals("1"))
+                        B1.xor(B2);
+                    else
+                        B2.xor(B1);
+                    break;
+                }
+                case "FLIP": {
+                    if (input[1].equals("1"))
+                        B1.flip(Integer.parseInt(input[2]));
+                    else
+                        B2.flip(Integer.parseInt(input[2]));
+                    break;
+                }
+                case "SET": {
+                    if (input[1].equals("1"))
+                        B1.set(Integer.parseInt(input[2]));
+                    else
+                        B2.set(Integer.parseInt(input[2]));
+                    break;
+                }
+            }
+
+            System.out.println(B1.cardinality() + " " + B2.cardinality());
+        }
+
+        sc.close();
+    
+    
+    }
+}
