@@ -1,0 +1,27 @@
+/*
+https://www.hackerrank.com/challenges/java-singleton/problem?h_r=internal-search
+*/
+
+
+import java.io.*;
+import java.util.*;
+import java.text.*;
+import java.math.*;
+import java.util.regex.*;
+import java.lang.reflect.*;
+
+
+class Singleton{
+    
+    public String str;
+    
+    private Singleton(){
+        super();
+    }
+    
+    static Singleton getSingleInstance(){
+        
+        return new Singleton();
+    }
+
+}
