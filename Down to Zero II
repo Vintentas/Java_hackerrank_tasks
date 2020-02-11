@@ -1,0 +1,57 @@
+/*
+https://www.hackerrank.com/challenges/down-to-zero-ii/problem?h_r=internal-search
+*/
+
+
+import java.io.*;
+import java.math.*;
+import java.text.*;
+import java.util.*;
+import java.util.regex.*;
+
+public class Solution {
+
+    static final int LIMIT = 1_000_000;
+    static int[] result = buildSolutions();
+
+    static int[] buildSolutions() {
+        int[] result = new int[LIMIT + 1];
+
+        for (int i = 1; i < result.length; i++) {
+            result[i] = result[i - 1] + 1;
+
+            for (int j = 2; j * j <= i; j++) {
+                if (i % j == 0) {
+                    int r = result[i / j] + 1;
+                    result[i] = (result[i] < r) ? result[i] : r ;
+                }
+            }
+        }
+        return result;
+    }
+
+    static int downToZero(int n) {
+        return result[n];
+    }
+
+    ///------------------------
+
+    private static final Scanner scanner = new Scanner(System.in);
+
+    public static void main(String[] args) throws IOException {
+        BufferedWriter bufferedWriter = new BufferedWriter(new FileWriter(System.getenv("OUTPUT_PATH")));
+
+        int q = Integer.parseInt(scanner.nextLine().trim());
+
+        for (int qItr = 0; qItr < q; qItr++) {
+            int n = Integer.parseInt(scanner.nextLine().trim());
+
+            int result = downToZero(n);
+
+            bufferedWriter.write(String.valueOf(result));
+            bufferedWriter.newLine();
+        }
+
+        bufferedWriter.close();
+    }
+}
