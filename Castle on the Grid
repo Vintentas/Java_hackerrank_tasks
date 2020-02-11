@@ -1,0 +1,105 @@
+/*
+https://www.hackerrank.com/challenges/castle-on-the-grid/problem?h_r=internal-search
+*/
+
+
+import java.io.*;
+import java.math.*;
+import java.security.*;
+import java.text.*;
+import java.util.*;
+import java.util.concurrent.*;
+import java.util.regex.*;
+
+public class Solution {
+
+    // Complete the minimumMoves function below.
+    static int minimumMoves(String[] grid, int startX, int startY, int goalX, int goalY) {
+
+        if (startX == goalX && startY == goalY ){
+            return 0;
+        }
+        
+        char [][] field = new char [grid.length][grid[0].length()];         
+        for (int i = 0; i < grid.length; i++){
+             for (int j = 0; j < grid[0].length(); j++){
+                 field[i][j] = grid[i].charAt(j);
+             }
+        }
+        
+        LinkedList <Point> move = new LinkedList <> ();
+        move.add(new Point (startX, startY, 0));
+        
+        while(!move.isEmpty()){
+            Point p = move.remove();
+
+            if (field[p.x][p.y] == 'X') continue;
+            if (p.x == goalX && p.y == goalY) return p.length;
+
+            field[p.x][p.y] = 'X';
+
+            for (int i = p.x + 1; i < field.length && field[i][p.y] == '.'; i++) {
+                move.add(new Point(i, p.y, p.length + 1));
+            }
+            for (int i = p.x - 1; i >= 0 && field[i][p.y] == '.'; i--) {
+                move.add(new Point(i, p.y, p.length + 1));
+            }
+            for (int i = p.y + 1; p.x < field.length && i < field[p.x].length && field[p.x][i] == '.'; i++) {
+                move.add(new Point(p.x, i, p.length + 1));
+            }
+            for (int i = p.y - 1; p.x < field.length && i >= 0 && field[p.x][i] == '.'; i--) {
+                move.add(new Point(p.x, i, p.length + 1));
+            }
+        }
+
+        return 1;       
+    }
+    
+    static class Point{
+        int x;
+        int y;
+        int length; 
+            
+        Point (int X, int Y, int length){
+            this.x = X;
+            this.y = Y;
+            this.length = length;
+        }   
+    }
+    
+    //************************
+    private static final Scanner scanner = new Scanner(System.in);
+
+    public static void main(String[] args) throws IOException {
+        BufferedWriter bufferedWriter = new BufferedWriter(new FileWriter(System.getenv("OUTPUT_PATH")));
+
+        int n = scanner.nextInt();
+        scanner.skip("(\r\n|[\n\r\u2028\u2029\u0085])?");
+
+        String[] grid = new String[n];
+
+        for (int i = 0; i < n; i++) {
+            String gridItem = scanner.nextLine();
+            grid[i] = gridItem;
+        }
+
+        String[] startXStartY = scanner.nextLine().split(" ");
+
+        int startX = Integer.parseInt(startXStartY[0]);
+
+        int startY = Integer.parseInt(startXStartY[1]);
+
+        int goalX = Integer.parseInt(startXStartY[2]);
+
+        int goalY = Integer.parseInt(startXStartY[3]);
+
+        int result = minimumMoves(grid, startX, startY, goalX, goalY);
+
+        bufferedWriter.write(String.valueOf(result));
+        bufferedWriter.newLine();
+
+        bufferedWriter.close();
+
+        scanner.close();
+    }
+}
