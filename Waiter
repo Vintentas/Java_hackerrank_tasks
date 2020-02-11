@@ -1,0 +1,97 @@
+/*
+https://www.hackerrank.com/challenges/waiter/problem
+*/
+
+import java.io.*;
+import java.math.*;
+import java.text.*;
+import java.util.*;
+import java.util.regex.*;
+
+public class Solution {
+
+    /*
+     * Complete the waiter function below.
+     */
+        static int[] waiter(int[] number, int q) {
+        int [] primes = getPrimes(q);
+        
+        Stack<Integer> A0 = new Stack<>();
+        for(int i = 0; i < number.length; i++){
+             A0.push(number[i]);
+        }
+
+        ArrayList<Stack<Integer>> stacks = new ArrayList<>();
+        for(int i = 0;i < q;i++) {
+            Stack<Integer> A = new Stack<>();
+            Stack<Integer> B = new Stack<>();
+            while(!A0.isEmpty()) {
+                if(A0.peek() % primes[i] == 0)
+                    A.push(A0.pop());
+                else
+                    B.push(A0.pop());
+            }
+            A0 = B;
+            stacks.add(A);
+        }
+        int idx = 0;
+        for(int i = 0;i < stacks.size();i++) {
+            Stack<Integer> it = stacks.get(i);
+            while(!it.isEmpty())
+                number[idx++] = it.pop();
+        }
+        while(!A0.isEmpty())
+            number[idx++] = A0.pop();
+        return number;
+    }   
+
+    private static int[] getPrimes(int i) {
+        int [] primes = new int[i];
+        BigInteger min = new BigInteger("2");
+        BigInteger max = new BigInteger("100000");
+        primes[0]=2;
+        int count = 1;
+        while(count <i && min.compareTo(max) < 0){
+            min = min.nextProbablePrime();
+            primes[count]=min.intValue();
+            count++;
+        }
+
+        return primes;
+    }
+    //--------------
+    private static final Scanner scanner = new Scanner(System.in);
+
+    public static void main(String[] args) throws IOException {
+        BufferedWriter bufferedWriter = new BufferedWriter(new FileWriter(System.getenv("OUTPUT_PATH")));
+
+        String[] nq = scanner.nextLine().split(" ");
+
+        int n = Integer.parseInt(nq[0].trim());
+
+        int q = Integer.parseInt(nq[1].trim());
+
+        int[] number = new int[n];
+
+        String[] numberItems = scanner.nextLine().split(" ");
+
+        for (int numberItr = 0; numberItr < n; numberItr++) {
+            int numberItem = Integer.parseInt(numberItems[numberItr].trim());
+            number[numberItr] = numberItem;
+        }
+
+        int[] result = waiter(number, q);
+
+        for (int resultItr = 0; resultItr < result.length; resultItr++) {
+            bufferedWriter.write(String.valueOf(result[resultItr]));
+
+            if (resultItr != result.length - 1) {
+                bufferedWriter.write("\n");
+            }
+        }
+
+        bufferedWriter.newLine();
+
+        bufferedWriter.close();
+    }
+}
