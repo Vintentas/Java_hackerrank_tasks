@@ -1,0 +1,39 @@
+/*
+https://www.hackerrank.com/challenges/java-md5/problem
+*/
+
+
+
+import java.io.*;
+import java.util.*;
+import java.security.*;
+import java.math.*;
+
+public class Solution {
+
+    public static void main(String[] args) {
+        /* Enter your code here. Read input from STDIN. Print output to STDOUT. Your class should be named Solution. */
+    
+        Scanner sc = new Scanner(System.in);
+        String s = sc.nextLine();
+          
+        try{
+            MessageDigest md5 = MessageDigest.getInstance("MD5");
+            byte [] bytes = md5.digest(s.getBytes());
+            
+            BigInteger bigInt = new BigInteger(1, bytes);
+            String md5Hex = bigInt.toString(16);
+
+            while( md5Hex.length() < 32 ){
+                md5Hex = "0" + md5Hex;
+            }        
+        
+            System.out.println(md5Hex);
+        }
+        catch(NoSuchAlgorithmException e){
+            e.printStackTrace();
+        }
+        
+        sc.close();
+    }
+}
