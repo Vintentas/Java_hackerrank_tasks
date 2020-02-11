@@ -1,0 +1,39 @@
+/*
+https://www.hackerrank.com/challenges/sha-256/problem?h_r=internal-search
+*/
+
+
+
+import java.io.*;
+import java.util.*;
+import java.security.*;
+
+public class Solution {
+
+    public static void main(String[] args) {
+        /* Enter your code here. Read input from STDIN. Print output to STDOUT. Your class should be named Solution. */
+   
+        Scanner sc = new Scanner(System.in);
+        String s = sc.nextLine();
+        
+        try{
+            MessageDigest sha256 = MessageDigest.getInstance("SHA-256");
+            byte[] bytes = sha256.digest(s.getBytes("UTF-8"));
+            
+            StringBuffer hexString = new StringBuffer();
+            
+            for (int i = 0; i < bytes.length; i++) {
+                String hex = Integer.toHexString(0xff & bytes[i]);
+                if(hex.length() == 1)
+                            hexString.append('0');            
+                hexString.append(hex);
+            }
+            System.out.println(hexString.toString());
+        } 
+        catch(Exception ex){
+            throw new RuntimeException(ex);
+        }
+        
+        sc.close();
+    }
+}
