@@ -1,0 +1,43 @@
+/*
+https://www.hackerrank.com/challenges/queue-using-two-stacks/problem?h_r=internal-search
+*/
+
+
+import java.io.*;
+import java.util.*;
+import java.text.*;
+import java.math.*;
+import java.util.regex.*;
+
+public class Solution {
+
+    public static void main(String[] args) {
+        /* Enter your code here. Read input from STDIN. Print output to STDOUT. Your class should be named Solution. */
+    
+        Scanner scanner = new Scanner(System.in);   
+        int n = scanner.nextInt();
+        scanner.nextLine();
+        
+        LinkedList <String> queue = new LinkedList <> ();
+        
+        for (int i = 0; i < n; i++){
+            String q = scanner.next();           
+            switch (q){
+                case ("1"):{
+                    queue.add(scanner.next());
+                    break;
+                }
+                case ("2"):{
+                    queue.removeFirst();
+                    break;
+                }
+                case ("3"):{
+                    System.out.println(queue.getFirst());
+                    break;
+                }                    
+            }
+        }
+        
+        scanner.close();
+    }
+}
