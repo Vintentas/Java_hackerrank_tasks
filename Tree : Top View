@@ -1,0 +1,119 @@
+/*
+https://www.hackerrank.com/challenges/tree-top-view/problem?h_r=internal-search
+*/
+
+
+
+import java.util.*;
+import java.io.*;
+
+class Node {
+    Node left;
+    Node right;
+    int data;
+    
+    Node(int data) {
+        this.data = data;
+        left = null;
+        right = null;
+    }
+}
+
+class Solution {
+
+    /* 
+    
+    class Node 
+        int data;
+        Node left;
+        Node right;
+    */
+
+        public static void topView(Node root) {
+
+            int h = hight(root);
+
+            HashMap <Integer, NodeInTree> map = new HashMap<>();
+           // map.put(0, root);
+
+            for (int i = 0; i<=h; i++){
+                hmTopView(root, map, 0, i, 0);
+            }
+
+            for (int i = -h; i<=h; i++){
+                if (map.get(i)!=null)
+                    System.out.print(map.get(i).node.data + " ");
+            }
+        }
+
+        public static void hmTopView(Node root, HashMap<Integer, NodeInTree> map, int lvlNode, int lvlTree, int hight){
+
+            if (-lvlNode == lvlTree || lvlNode == lvlTree){
+                NodeInTree nit = new NodeInTree(root, hight);
+                if (map.containsKey(lvlNode)) {
+                    if (hight < map.get(lvlNode).h)
+                        map.put(lvlNode, nit);
+                }
+                else {
+                    map.put(lvlNode, nit);
+                }
+            }
+
+            if (root.left != null){
+                hmTopView(root.left, map, lvlNode-1, lvlTree , hight+1);
+            }
+            if (root.right != null){
+                hmTopView(root.right, map, lvlNode+1, lvlTree , hight+1);
+            }
+        }
+
+        public static int hight(Node root) {
+            int hl = 0;
+            int hr = 0;
+
+            if (root.right != null)
+                hr = hight(root.right)+1;
+
+            if (root.left != null)
+                hl = hight(root.left)+1;
+
+            return ((hr > hl) ? hr : hl);
+        }
+
+        static class NodeInTree {
+            Node node;
+            int h;
+            public NodeInTree(Node n, int h){
+                this.node = n;
+                this.h = h;
+            }
+        }
+
+	public static Node insert(Node root, int data) {
+        if(root == null) {
+            return new Node(data);
+        } else {
+            Node cur;
+            if(data <= root.data) {
+                cur = insert(root.left, data);
+                root.left = cur;
+            } else {
+                cur = insert(root.right, data);
+                root.right = cur;
+            }
+            return root;
+        }
+    }
+
+    public static void main(String[] args) {
+        Scanner scan = new Scanner(System.in);
+        int t = scan.nextInt();
+        Node root = null;
+        while(t-- > 0) {
+            int data = scan.nextInt();
+            root = insert(root, data);
+        }
+        scan.close();
+        topView(root);
+    }	
+}
