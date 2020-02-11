@@ -1,0 +1,108 @@
+/*
+https://www.hackerrank.com/challenges/game-of-two-stacks/problem?h_r=internal-search
+*/
+
+import java.io.*;
+import java.math.*;
+import java.text.*;
+import java.util.*;
+import java.util.regex.*;
+
+public class Solution {
+
+    /*
+     * Complete the twoStacks function below.
+     */
+    static int twoStacks(int x, int[] a, int[] b) {
+              int result = 0;
+        int sumA = 0;
+        int sumB = 0;
+
+        LinkedList<Integer> listA = new LinkedList<>();
+        for (int i = 0; i < a.length; i++){
+            if ((sumA + a[i]) <= x) {
+                sumA += a[i];
+                listA.addLast(a[i]);
+            }
+            else
+                break;
+        }
+
+        LinkedList<Integer> listB = new LinkedList<>();
+        for (int i = 0; i < b.length; i++){
+            if ((sumB + b[i]) <= x) {
+                sumB += b[i];
+                listB.addLast(b[i]);
+            }
+            else
+                break;
+        }
+
+        result = (listA.size() > listB.size()) ? listA.size() : listB.size();
+
+        sumA = 0;
+        int countA = 0;
+        // sumB = summ elements in list B;
+        int countB = listB.size();
+        while (!listA.isEmpty()){
+            sumA += listA.removeFirst();
+            countA ++;
+            while (!listB.isEmpty()){
+                if ((sumA + sumB) > x){
+                    sumB -= listB.removeLast();
+                    countB--;
+                }
+                else
+                    break;
+            }
+            if ((sumA + sumB) <= x && (countA + countB) > result)
+                result = countA + countB;
+        }
+
+        return result;
+    }
+//*******************************
+    
+    private static final Scanner scanner = new Scanner(System.in);
+
+    public static void main(String[] args) throws IOException {
+        BufferedWriter bufferedWriter = new BufferedWriter(new FileWriter(System.getenv("OUTPUT_PATH")));
+
+        int g = Integer.parseInt(scanner.nextLine().trim());
+
+        for (int gItr = 0; gItr < g; gItr++) {
+            String[] nmx = scanner.nextLine().split(" ");
+
+            int n = Integer.parseInt(nmx[0].trim());
+
+            int m = Integer.parseInt(nmx[1].trim());
+
+            int x = Integer.parseInt(nmx[2].trim());
+
+            int[] a = new int[n];
+
+            String[] aItems = scanner.nextLine().split(" ");
+
+            for (int aItr = 0; aItr < n; aItr++) {
+                int aItem = Integer.parseInt(aItems[aItr].trim());
+                a[aItr] = aItem;
+            }
+
+            int[] b = new int[m];
+
+            String[] bItems = scanner.nextLine().split(" ");
+
+            for (int bItr = 0; bItr < m; bItr++) {
+                int bItem = Integer.parseInt(bItems[bItr].trim());
+                b[bItr] = bItem;
+            }
+
+            int result = twoStacks(x, a, b);
+
+            bufferedWriter.write(String.valueOf(result));
+            bufferedWriter.newLine();
+        }
+
+        bufferedWriter.close();
+    }
+}
